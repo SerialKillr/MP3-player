@@ -1,0 +1,123 @@
+╔══════════════════════════════════════════════════════════════╗
+║              ESP32 iPod — Full Wiring Guide                  ║
+╚══════════════════════════════════════════════════════════════╝
+
+────────────────────────────────────────────────────────────────
+STEP 1 — POWER CHAIN (build & test this first, before anything else)
+────────────────────────────────────────────────────────────────
+
+18650 battery (+)  ──────▶  TP4056  B+
+18650 battery (−)  ──────▶  TP4056  B−
+
+TP4056  OUT+        ──────▶  MT3608  IN+
+TP4056  OUT−        ──────▶  MT3608  IN−
+
+MT3608  OUT+        ──────▶  Latching switch (one leg)
+Latching switch (other leg) ──▶  "5V RAIL"
+MT3608  OUT−        ──────▶  "GND RAIL"
+
+⚠ Adjust MT3608 trimpot with multimeter until OUT reads 5.00V
+  BEFORE connecting the ESP32.
+
+LED indicator:
+  5V RAIL ──▶ 220Ω resistor ──▶ LED (+) long leg
+  LED (−) short leg ──▶ GND RAIL
+
+
+────────────────────────────────────────────────────────────────
+STEP 2 — ESP32 POWER INPUT
+────────────────────────────────────────────────────────────────
+
+5V RAIL   ──────▶  ESP32  VIN
+GND RAIL  ──────▶  ESP32  GND
+
+
+────────────────────────────────────────────────────────────────
+STEP 3 — SSD1306 OLED (I2C)
+────────────────────────────────────────────────────────────────
+
+OLED VCC  ──────▶  ESP32  3.3V
+OLED GND  ──────▶  ESP32  GND
+OLED SDA  ──────▶  ESP32  GPIO21
+OLED SCL  ──────▶  ESP32  GPIO22
+
+
+────────────────────────────────────────────────────────────────
+STEP 4 — MP3-TF-16P V3.0 (UART + audio out)
+────────────────────────────────────────────────────────────────
+
+MP3 VCC   ──────▶  5V RAIL
+MP3 GND   ──────▶  GND RAIL
+
+MP3 RX    ──────▶  1kΩ resistor  ──▶  ESP32 GPIO17 (TX2)
+MP3 TX    ──────▶  ESP32 GPIO16 (RX2)         [direct, no resistor]
+
+MP3 DAC_L ──────▶  3.5mm jack — LEFT terminal
+MP3 DAC_R ──────▶  3.5mm jack — RIGHT terminal
+MP3 GND   ──────▶  3.5mm jack — SLEEVE (ground) terminal
+
+Note: Insert microSD card directly into the MP3-TF-16P's own slot.
+      Music files go on this card, named/numbered per DFPlayer
+      convention (e.g. 0001.mp3, 0002.mp3 in a folder named "01"
+      or "mp3", check your module's manual for exact convention).
+
+
+────────────────────────────────────────────────────────────────
+STEP 5 — AD 5-BUTTON KEYBOARD MODULE (ADC)
+────────────────────────────────────────────────────────────────
+
+AD module VCC  ──────▶  ESP32  3.3V   (NOT 5V — keeps ADC in range)
+AD module GND  ──────▶  ESP32  GND
+AD module OUT  ──────▶  ESP32  GPIO34 (ADC1_CH6)
+
+
+────────────────────────────────────────────────────────────────
+STEP 6 — SIDE VOLUME BUTTONS (tactile, momentary)
+────────────────────────────────────────────────────────────────
+
+Vol+ button:
+  Leg 1  ──────▶  ESP32  GPIO27
+  Leg 2  ──────▶  GND RAIL
+
+Vol− button:
+  Leg 1  ──────▶  ESP32  GPIO14
+  Leg 2  ──────▶  GND RAIL
+
+(No external resistors needed — code uses INPUT_PULLUP,
+ so a press simply pulls the pin LOW)
+
+
+────────────────────────────────────────────────────────────────
+GROUND RULE
+────────────────────────────────────────────────────────────────
+
+Every GND mentioned above (OLED, MP3 module, AD module, buttons,
+LED, ESP32) must all connect to ONE common ground rail. Easiest
+way: run a single ground strip on your perfboard/breadboard and
+tie every GND wire into it.
+
+
+────────────────────────────────────────────────────────────────
+RECOMMENDED BUILD ORDER
+────────────────────────────────────────────────────────────────
+
+1. Wire power chain (battery → TP4056 → MT3608 → switch)
+   Set MT3608 to 5.00V with multimeter BEFORE connecting ESP32
+
+2. Connect ESP32 to power rail only — confirm it boots
+   (LED on ESP32 board should light, or check via USB serial)
+
+3. Add OLED — flash a basic "Hello World" sketch to confirm display
+
+4. Add MP3-TF-16P — confirm it initializes (check Serial Monitor)
+
+5. Add AD button module — run CALIBRATE_MODE to log button values
+
+6. Add side volume buttons — confirm GPIO27/14 register presses
+
+7. Add LED indicator last — purely cosmetic, won't break anything
+   if wired last
+
+8. Flash the full firmware, test everything together, THEN solder
+   permanently and move into the enclosure
+

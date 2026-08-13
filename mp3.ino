@@ -273,6 +273,7 @@ void playSong(int number) {
 
 // =============================================================
 //  READ AD KEYBOARD
+// This calibration has to be done manually and changes from keyboard to keyboard therefore I have attached another piece of .ino code that'll help determine min & max for each 
 // =============================================================
 Button readADButton() {
   int val = analogRead(AD_PIN);

@@ -383,7 +383,7 @@ void showSplash() {
   display.setCursor(30, 34);
   display.print("iPod v1.0");
   display.setCursor(18, 48);
-  display.print("by Sriram :)");
+  display.print("by SerialKillr :)");
   display.display();
   delay(2000);
 }

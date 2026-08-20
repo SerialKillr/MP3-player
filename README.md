@@ -38,7 +38,7 @@ The TP4056 provides safe USB-C charging while the MT3608 boosts the battery volt
 * Play/Pause control
 * Volume adjustment
 * Track skipping
-* Seek forward/backward
+* Seek forward/backward (doesnt work)
 * OLED status display
 * Battery-powered portable operation
 

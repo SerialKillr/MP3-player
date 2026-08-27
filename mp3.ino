@@ -401,3 +401,4 @@ void showError(const char* msg) {
   display.print(msg);
   display.display();
 }
+// Obi-wan Kenobi: hello there

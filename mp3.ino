@@ -22,12 +22,11 @@
 //    Vol+      → GPIO27  + GND
 //    Vol−      → GPIO14  + GND
 //
-//  ⚠ NOTE ON SEEKING:
-//    The MP3-TF-16P / DFPlayer Mini protocol does NOT support
-//    seeking to an arbitrary timestamp within a track.
-//    Left/Right buttons display the seek offset visually but
-//    do not actually jump to that position in the audio.
-//    True seeking would require a different audio module.
+//  ⚠  Built-in DAC note:
+//    GPIO25 and GPIO26 are the fixed DAC pins on ESP32.
+//    I2S_DOUT is set to 25; I2S_BCLK and I2S_LRC are unused
+//    in internal-DAC mode and left as 0.
+//    If you get no audio, swap I2S_DOUT to 26 and try again.
 // ============================================================
 
 #include <Wire.h>

@@ -6,6 +6,7 @@
 //    - SSD1306 0.96" OLED (I2C)
 //    - AD 5-button keyboard module (ADC)
 //    - 2x tactile side buttons for volume (GPIO)
+//    - Temporary button for external reset
 //
 //  Libraries required (install via Arduino Library Manager):
 //    - DFRobotDFPlayerMini  by DFRobot

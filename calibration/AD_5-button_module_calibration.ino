@@ -46,16 +46,9 @@ void loop() {
 
   Serial.print("Raw value: ");
   Serial.print(val);
-  Serial.print("   ->  ");
 
-  // Broad guesses — exact values differ per module
-  if      (val < 100)                  Serial.println("Probably UP");
-  else if (val >= 300  && val < 600)   Serial.println("Probably RIGHT");
-  else if (val >= 900  && val < 1300)  Serial.println("Probably LEFT");
-  else if (val >= 1600 && val < 2000)  Serial.println("Probably DOWN");
-  else if (val >= 2400 && val < 2900)  Serial.println("Probably CENTER");
-  else if (val >= 3000)                Serial.println("No button pressed");
-  else                                 Serial.println("Between buttons — ignore");
+  delay(2000); 
+ 
 
-  delay(100);
+
 }

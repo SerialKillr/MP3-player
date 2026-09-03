@@ -1,0 +1,26 @@
+Step 1 — Wire only the power chain first
+  18650 → TP4056 → MT3608
+  Do NOT connect ESP32 yet
+
+Step 2 — Touch multimeter probes to MT3608 output
+  Red probe  → MT3608 OUT+
+  Black probe → MT3608 OUT−
+  Turn the battery on / plug in USB to power the TP4056
+
+Step 3 — Read the voltage
+  You'll see something like 3.7V or whatever the battery is at
+
+Step 4 — Adjust the trimpot
+  The blue box on the MT3608 has a tiny cross-head screw
+  Use a small flathead or Phillips screwdriver
+  Turn CLOCKWISE slowly to increase voltage
+  Turn ANTICLOCKWISE to decrease
+  Watch the multimeter as you turn
+
+Step 5 — Stop exactly at 5.00V
+  Anything between 4.9V and 5.1V is fine
+  Do not go above 5.2V — you risk damaging the ESP32
+
+Step 6 — Done, never touch it again
+  Connect ESP32 VIN to MT3608 OUT+
+  Connect ESP32 GND to MT3608 OUT−
